@@ -13114,7 +13114,7 @@ div#notebook {
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Problem-1">Problem 1<a class="anchor-link" href="#Problem-1">&#182;</a></h2><p>We have about 100,000 temperature readings from an experiment. The readings are Gaussian-distributed with a mean of 12 K and a standard deviation of 0.4 K.
-There are also some erroneous readings, which are added to the Gaussian-distributed data in the code below.</p>
+Let's also assume that our equipment malfunctioned for some of the measurements, so there are also some erroneous readings, which are added to the Gaussian-distributed data in the code below.</p>
 
 </div>
 </div>
@@ -13166,8 +13166,8 @@ There are also some erroneous readings, which are added to the Gaussian-distribu
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Let's say we want to select data such that the amount of "good" Gaussian-distributed data is maximized, and the amount of "bad" erroneous data is minimized. The question we should ask is then: At what value $X\sigma$ away from 12 K does removing readings outside this value retain the most "good" data and discard the most "bad" data? The second half of the question is important because it is likely that there will be no "perfect" value $X\sigma$ that will allow us to only keep good data and only reject bad data - we can only find an <em>optimal</em> value.</p>
-<p>First, let's explore our data a bit, and plot the results for "good" and "bad" data we've identified for different values of $X\sigma$.</p>
+<p>Let's say we want to select data such that the amount of "good" Gaussian-distributed data is maximized, and the amount of "bad" erroneous data is minimized. The question we should ask is then: For which value of $X\sigma$ does the range $12 \pm X\sigma$ include the most "good" data and exclude the most "bad" data? The second half of the question is important because it is likely that there will be no "perfect" value $X\sigma$ that will allow us to only keep good data and only reject bad data - we can only find an <em>optimal</em> value.</p>
+<p>First, let's explore our data a bit, and plot the results for "good" and "bad" data we've identified for different values of $X\sigma$. We'll call correctly-identified good data "true positives", correctly-identified bad data "true negatives", incorrectly-identified good data "false positives", and incorrectly-identified bad data "false negatives".</p>
 
 </div>
 </div>
@@ -13593,7 +13593,7 @@ Converting back to sigma: 4.999999996908459
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Problem-3">Problem 3<a class="anchor-link" href="#Problem-3">&#182;</a></h2><p>Now let us assume we see an average number of 1 cosmic ray per minute when observing an empty moon-sized patch on the sky. If we measure the counts for an 8-hour interval, we expect to see an average of $8 * 60 = 480$ cosmic rays during those 8 hours. The observations in an 8-hour time frame are represented by a Poisson distribution with a mean of $\lambda = 480$. Now let us assume we take 15 days worth of measurements, which corresponds to 15 8-hour timeframes. Because there are 15 timeframes of data and the distribution of cosmic rays seen per minute does not vary between days, we convolve each of the 15 datasets together, which gives a Poisson distribution with a mean of $15 * 480 = 7200$ cosmic rays.</p>
+<h2 id="Problem-3">Problem 3<a class="anchor-link" href="#Problem-3">&#182;</a></h2><p>Now let us assume we see an average number of 1 cosmic ray per minute when observing an empty moon-sized patch on the sky. If we measure the counts for an 8-hour interval, we expect to see an average of $8 * 60 = 480$ cosmic rays during those 8 hours. The observations in an 8-hour time frame are represented by a Poisson distribution with a mean of $\lambda = 480$. Now let us assume we take 15 days worth of measurements, which corresponds to 15 8-hour timeframes. Because there are 15 timeframes of data and the distribution of cosmic rays seen per minute does not vary between days, we convolve each of the 15 datasets together, which gives a Poisson distribution with a mean of $15 * 480 = 7200$ cosmic rays. We multiply the mean for the distribution of 1 day by 15 because the convolution of multiple Poisson distributions is itself a Poisson distribution with a mean equal to the sum of all the means of the convolved distributions.</p>
 
 </div>
 </div>
@@ -13645,6 +13645,7 @@ Converting back to sigma: 4.999999996908459
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<p>Notice how the distribution looks fairly Gaussian at this point (downward parabola on a log scale) - this is because a Poisson distribution with a large mean will approach a Gaussian distribution.</p>
 <p>Now let's assume we measure the number of cosmic rays seen while pointing our telescope at the moon as it moves across the sky, and we see 6800 cosmic rays over a 15-day period, measuring for 8 hours each day. What is the significance of this measurement? That is, what is the probability that the background data plotted above produced 6800 <em>or less</em> cosmic rays in 15 days?</p>
 <p>To answer this question, we integrate the PMF of our background from 0 to 6800, and then convert it to a sigma value. The precise formula for the integration is $P(k | \lambda) = e^{-\lambda} \sum \limits_{i=0}^{k} \frac{\lambda^i}{i!}$, where $\lambda = 7200$ and $k = 6800$.</p>
 <p>A unique aspect of this problem is the definition of what it means for a measurement to be "more signal-like" - because seeing less cosmic rays indicates the presence of an object blocking the rays, seeing <em>less</em> cosmic rays corresponds to a stronger signal. This changes the bounds of our integral from 0 to 6800, instead of integrating from some point out to infinity.</p>
