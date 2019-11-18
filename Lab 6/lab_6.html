@@ -13185,7 +13185,8 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Problem-1">Problem 1<a class="anchor-link" href="#Problem-1">&#182;</a></h2><p>Let's find a model for the background distribution of the HERA telescope data. A plot from the previous lab is shown below, where the average visibility amplitude versus observed frequency is shown across all baselines for the first time interval, where redundant baselines (consisting of an antenna paired with itself) are removed.</p>
+<h2 id="Problem-1">Problem 1<a class="anchor-link" href="#Problem-1">&#182;</a></h2><p>In the previous lab we explored data from the HERA telescope, composed of 52 radio antennas forming 1,378 baseline pairs. The data represents visibility measurements taken from all baselines for 60 intervals of time, measured in Julian dates. We found undesirable interference for baselines composed of only one antenna, so we removed these pairs and collected visibility measurements for the first time interval. Plotting the average amplitude across all baselines against the observed frequency led us to some interesting observations like various sources of radio frequency interference (RFI) in South Africa.</p>
+<p>Let's find a model for the background distribution of the HERA telescope data. A plot from the previous lab is shown below, where the average visibility amplitude of XX-polarized light versus observed frequency is shown across all baselines for the first time interval, where redundant baselines (consisting of an antenna paired with itself) are removed.</p>
 
 </div>
 </div>
@@ -13503,7 +13504,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Both of these "chunks" have the same general shape, which makes sense - we just took a bunch of randomly-selected points from the background and shifted them up by 100, so the shape of the shifted distribution shouldn't change much. This histogram tells us that in addition to the original background distribution, there is a similar distribution of points starting at an amplitude of around 100 randomly mixed in with the original background data, and since the probability densities for this second distribution are smaller than the first, then it has a smaller probability of occurring (about 25% of the time, to be precise).</p>
+<p>Both of these "chunks" have the same general shape, which makes sense - we just took a bunch of randomly-selected points from the background and shifted them up by 100, so the shape of the shifted distribution shouldn't change much. This histogram tells us that in addition to the original background distribution, there is a similar distribution of points starting at an amplitude of around 100 randomly mixed in with the original background data, and since the probability densities for this second distribution are smaller than the first, then it has a smaller probability of occurring (about 25% of the time, to be precise). Furthermore, because some of our background was shifted away from its original position around 0, the leftmost "chunk" has an overall smaller probability density (75% of its original value).</p>
 <p>Because of the nature of the lognormal distribution, the observed signal of this second distribution is biased towards amplitudes greater than 100. If our background were Gaussian and centered around some central value, then our observed signal would be as well. However, because our background is a positive definite dataset with a minimum of zero, the smallest possible observed signal in the shifted distribution is 100. In this sense, it is not symmetric like a Gaussian curve would be - we have a larger chance of observing a signal greater than the "true" injected signal.</p>
 
 </div>
@@ -13587,6 +13588,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<p>There are a few vertical streaks on this plot - these correspond to RFI peaks in the amplitude vs. frequency plot shown in problem 1. Since they start out at a higher amplitude, randomly injecting a larger signal 25% of the time will cause it to be slightly contrasted with the rest of the data.</p>
 <p>To see what happens to the distribution of our background, we will replace each row of data with its histogram, where the probability density is represented by the color of the pixels. We are simulating the effect of observing a larger and larger injected signal to 25% of our background data - think of this like a birds-eye view of the histograms in problem 2, with one portion gradually shifting more and more to the right as we inject larger and larger signals.</p>
 
 </div>
@@ -13637,6 +13639,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<p>There is a faint blue line extending diagonally to the right, and a bright yellow-green line extending vertically up from 0. The diagonal line is blue because our injection rate is relatively low. A higher injection rate would move a higher percentage of the background upwards, increasing the probability density of points on this diagonal line.</p>
 <p>It's difficult to see what's going on here, so let's lower the maximum amplitude to examine the structure of the plot closer to zero.</p>
 
 </div>
@@ -13840,7 +13843,7 @@ div#notebook {
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>This looks like our background distribution, only it's flipped around. This makes sense - in problem 2 we found that the observed signal was more likely to be greater than the injected signal, therefore, it is more likely that our injected signal is less than the observed signal. This manifests as a left-biased distribution with the same general shape as the background, albeit mirrored.</p>
-<p>Let's find the $1\sigma$ uncertainty on the injected signal strength. To do this, we integrate the probabilities on the histogram until we've reached the probability associated with integrating the standard normal PDF up to -1, then we subtract the most likely estimate for the injected signal, which is the signal strength with the maximum probability density on the above histogram.</p>
+<p>Because this is a distribution and not a single value, this means there are many signals which could have caused an observation of 150 units. Let's find exactly how uncertain we are to within $1\sigma$ of probability. To do this, we integrate the probabilities on the histogram until we've reached the probability associated with integrating the standard normal PDF up to -1 (we integrate from $-\infty$ to -1 because our injected signal distribution is skewed to the left). Then we subtract the most likely estimate for the injected signal, which is the signal strength with the maximum probability density on the above histogram.</p>
 
 </div>
 </div>
